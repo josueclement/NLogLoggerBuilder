@@ -10,6 +10,9 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace NLogLoggerBuilder;
 
+/// <summary>
+/// Builder class that creates loggers of type <see cref="ILogger"/> with NLog
+/// </summary>
 public class NLogLoggerProviderBuilder
 {
     private readonly LogFactory _logFactory = new();
@@ -21,10 +24,10 @@ public class NLogLoggerProviderBuilder
     public static string DefaultLayout => "${longdate} | ${level:uppercase=true} | ${message} | ThreadId=${threadid} | ${callsite:className=false:fileName=true:includeSourcePath=false:methodName=true} | GCTotalMemory=${gc:property=TotalMemory}${onexception:inner= | ${exception:format=ToString}}";
 
     /// <summary>
-    /// Build an ILogger from added targets
+    /// Build an <see cref="ILogger"/> with added targets
     /// </summary>
     /// <param name="name">Logger name</param>
-    /// <returns>Logger</returns>
+    /// <returns><see cref="ILogger"/></returns>
     /// <exception cref="InvalidOperationException"></exception>
     public ILogger BuildLogger(string name)
     {
@@ -37,11 +40,11 @@ public class NLogLoggerProviderBuilder
     }
 
     /// <summary>
-    /// Build an ILogger from NLog configuration file
+    /// Build an <see cref="ILogger"/> from NLog configuration file
     /// </summary>
     /// <param name="name">Logger name</param>
     /// <param name="configFilePath">NLog configuration file path</param>
-    /// <returns>Logger</returns>
+    /// <returns><see cref="ILogger"/></returns>
     public ILogger BuildLoggerFromConfigFile(string name, string configFilePath)
     {
         _logFactory.Setup().LoadConfigurationFromFile(configFilePath);
@@ -50,7 +53,7 @@ public class NLogLoggerProviderBuilder
     }
 
     /// <summary>
-    /// Adds a target and creates a rule for it
+    /// Add a target and create a rule for it
     /// </summary>
     /// <param name="target">Target to register</param>
     /// <param name="minLevel">Minimum log level</param>
@@ -76,7 +79,7 @@ public class NLogLoggerProviderBuilder
     }
 
     /// <summary>
-    /// Adds a target and creates a rule for it
+    /// Configure a target, add it and create a rule for it
     /// </summary>
     /// <param name="target">Target to register</param>
     /// <param name="config">Target's configuration method</param>
