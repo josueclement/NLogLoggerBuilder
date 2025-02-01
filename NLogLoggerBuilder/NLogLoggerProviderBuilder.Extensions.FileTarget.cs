@@ -18,11 +18,8 @@ public static class FileTargetExtensions
     public static NLogLoggerProviderBuilder AddFileTarget(
         this NLogLoggerProviderBuilder builder,
         string name,
-        Action<FileTarget>? config = null,
+        Action<FileTarget> config,
         LogLevel minLevel = LogLevel.Trace,
         LogLevel maxLevel = LogLevel.Critical)
-    {
-        builder.AddTargetWithConfiguration(new FileTarget(name), config, minLevel, maxLevel);
-        return builder;
-    } 
+        => builder.AddTargetWithConfiguration(new FileTarget(name), config, minLevel, maxLevel);
 }

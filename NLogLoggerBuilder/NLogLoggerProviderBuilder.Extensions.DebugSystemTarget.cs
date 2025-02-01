@@ -18,11 +18,8 @@ public static class DebugSystemTargetExtensions
     public static NLogLoggerProviderBuilder AddDebugSystemTarget(
         this NLogLoggerProviderBuilder builder,
         string name,
-        Action<DebugSystemTarget>? config,
+        Action<DebugSystemTarget> config,
         LogLevel minLevel = LogLevel.Trace,
         LogLevel maxLevel = LogLevel.Critical)
-    {
-        builder.AddTargetWithConfiguration(new DebugSystemTarget(name), config, minLevel, maxLevel);
-        return builder;
-    } 
+        => builder.AddTargetWithConfiguration(new DebugSystemTarget(name), config, minLevel, maxLevel);
 }

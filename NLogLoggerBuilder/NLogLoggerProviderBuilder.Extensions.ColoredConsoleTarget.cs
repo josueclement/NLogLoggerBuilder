@@ -18,11 +18,8 @@ public static class ColoredConsoleTargetExtensions
     public static NLogLoggerProviderBuilder AddColoredConsoleTarget(
         this NLogLoggerProviderBuilder builder,
         string name,
-        Action<ColoredConsoleTarget>? config,
+        Action<ColoredConsoleTarget> config,
         LogLevel minLevel = LogLevel.Trace,
         LogLevel maxLevel = LogLevel.Critical)
-    {
-        builder.AddTargetWithConfiguration(new ColoredConsoleTarget(name), config, minLevel, maxLevel);
-        return builder;
-    } 
+        => builder.AddTargetWithConfiguration(new ColoredConsoleTarget(name), config, minLevel, maxLevel);
 }

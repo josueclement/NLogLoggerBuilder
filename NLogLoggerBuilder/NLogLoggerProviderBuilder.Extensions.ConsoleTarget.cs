@@ -18,11 +18,8 @@ public static class ConsoleTargetExtensions
     public static NLogLoggerProviderBuilder AddConsoleTarget(
         this NLogLoggerProviderBuilder builder,
         string name,
-        Action<ConsoleTarget>? config,
+        Action<ConsoleTarget> config,
         LogLevel minLevel = LogLevel.Trace,
         LogLevel maxLevel = LogLevel.Critical)
-    {
-        builder.AddTargetWithConfiguration(new ConsoleTarget(name), config, minLevel, maxLevel);
-        return builder;
-    } 
+        => builder.AddTargetWithConfiguration(new ConsoleTarget(name), config, minLevel, maxLevel);
 }

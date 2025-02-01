@@ -56,7 +56,7 @@ public class NLogLoggerProviderBuilder
     /// <param name="minLevel">Minimum log level</param>
     /// <param name="maxLevel">Maximum log level</param>
     /// <typeparam name="T">Target type</typeparam>
-    public void AddTarget<T>(
+    public NLogLoggerProviderBuilder AddTarget<T>(
         T target,
         LogLevel minLevel = LogLevel.Trace,
         LogLevel maxLevel = LogLevel.Critical)
@@ -71,6 +71,8 @@ public class NLogLoggerProviderBuilder
             target);
         
         _loggingConfiguration.AddRule(rule);
+
+        return this;
     }
 
     /// <summary>
@@ -81,15 +83,15 @@ public class NLogLoggerProviderBuilder
     /// <param name="minLevel">Minimum log level</param>
     /// <param name="maxLevel">Maximum log level</param>
     /// <typeparam name="T">Target type</typeparam>
-    public void AddTargetWithConfiguration<T>(
+    public NLogLoggerProviderBuilder AddTargetWithConfiguration<T>(
         T target,
-        Action<T>? config = null,
+        Action<T> config,
         LogLevel minLevel = LogLevel.Trace,
         LogLevel maxLevel = LogLevel.Critical)
         where T : Target
     {
         config?.Invoke(target);
-        AddTarget(target, minLevel, maxLevel);
+        return AddTarget(target, minLevel, maxLevel);
     }
     
     private static NLog.LogLevel ConvertToNLogLevel(LogLevel logLevel)

@@ -21,8 +21,5 @@ public static class DatabaseTargetExtensions
         Action<DatabaseTarget> config,
         LogLevel minLevel = LogLevel.Trace,
         LogLevel maxLevel = LogLevel.Critical)
-    {
-        builder.AddTargetWithConfiguration(new DatabaseTarget(name), config, minLevel, maxLevel);
-        return builder;
-    }
+        => builder.AddTargetWithConfiguration(new DatabaseTarget(name), config, minLevel, maxLevel);
 }
