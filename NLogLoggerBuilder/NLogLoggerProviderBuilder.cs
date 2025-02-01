@@ -18,7 +18,7 @@ public class NLogLoggerProviderBuilder
     /// <summary>
     /// Gets the default layout
     /// </summary>
-    public string DefaultLayout => "${longdate} | ${level:uppercase=true} | ${message} | ThreadId=${threadid} | ${callsite:className=false:fileName=true:includeSourcePath=false:methodName=true} | GCTotalMemory=${gc:property=TotalMemory}${onexception:inner= | ${exception:format=ToString}}";
+    public static string DefaultLayout => "${longdate} | ${level:uppercase=true} | ${message} | ThreadId=${threadid} | ${callsite:className=false:fileName=true:includeSourcePath=false:methodName=true} | GCTotalMemory=${gc:property=TotalMemory}${onexception:inner= | ${exception:format=ToString}}";
 
     /// <summary>
     /// Build an ILogger from added targets
