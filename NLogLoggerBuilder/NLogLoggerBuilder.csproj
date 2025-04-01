@@ -1,33 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <OutputType>Library</OutputType>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;net9.0;net472</TargetFrameworks>
         <Nullable>enable</Nullable>
         <LangVersion>13</LangVersion>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>NLogLoggerBuilder</Title>
-        <Version>1.1.0</Version>
         <Authors>Josué Clément</Authors>
+        <Copyright>Copyright © 2025 Josué Clément</Copyright>
+        <PackageId>NLogLoggerBuilder</PackageId>
+        <Title>NLog logger builder</Title>
+        <Version>1.2.0</Version>
+        <Description>.NET library that build NLog logger for Microsoft.Extensions.Logging</Description>
+        <PackageTags>nlogloggerbuilder nlog logging open-source</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+        <PackageProjectUrl>https://github.com/josueclement/NLogLoggerBuilder</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/josueclement/NLogLoggerBuilder</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <IncludeSymbols>True</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
-        <PackageReference Include="NLog" Version="5.3.4" />
-        <PackageReference Include="NLog.Database" Version="5.3.4" />
-        <PackageReference Include="NLog.Extensions.Logging" Version="5.3.15" />
-        <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+        <PackageReference Include="NLog" Version="5.1.0" />
+        <PackageReference Include="NLog.Database" Version="5.1.0" />
+        <PackageReference Include="NLog.Extensions.Logging" Version="5.1.0" />
     </ItemGroup>
-
-    <!-- Readme for the NuGet package -->
-    <PropertyGroup>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageicenseFile>LICENSE.txt</PackageicenseFile>
-    </PropertyGroup>
 
     <ItemGroup>
         <None Include="..\README.md" Pack="true" PackagePath="\" />
-        <None Include="..\LICENSE.txt" Pack="true" PackagePath="\" />
+        <None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

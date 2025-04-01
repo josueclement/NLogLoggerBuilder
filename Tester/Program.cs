@@ -9,7 +9,10 @@ namespace Tester;
 
 public static class Program
 {
-    public static IServiceProvider? ServiceProvider { get; private set; }
+    private static IServiceProvider? _serviceProvider;
+
+    private static IServiceProvider ServiceProvider => _serviceProvider ??
+                                                      throw new InvalidOperationException("ServiceProvider is not initialized.");
 
     private static void ConfigureServices()
     {
@@ -21,7 +24,7 @@ public static class Program
         });
         services.AddSingleton<Dummy>();
         services.AddTransient<NLogLoggerProviderBuilder>();
-        ServiceProvider = services.BuildServiceProvider();
+        _serviceProvider = services.BuildServiceProvider();
     }
     
     public static void Main(string[] args)
@@ -30,48 +33,48 @@ public static class Program
         {
             ConfigureServices();
 
-            var dummy = ServiceProvider!.GetRequiredService<Dummy>();
+            var dummy = ServiceProvider.GetRequiredService<Dummy>();
 
-            var logger = ServiceProvider!.GetRequiredService<NLogLoggerProviderBuilder>()
-                .AddColoredConsoleTarget("myColoredConsoleTarget",
-                    config =>
-                    {
-                        config.Layout = NLogLoggerProviderBuilder.DefaultLayout;
-                    })
-                .AddFileTarget("myFileTarget",
-                    config =>
-                    {
-                        config.Layout = NLogLoggerProviderBuilder.DefaultLayout;
-                        config.FileName = "Logs/tester.log";
-                    })
-                .AddDatabaseTarget("myDatabaseTarget",
-                    config =>
-                    {
-                        // CREATE TABLE "LOGS" (
-                        //     "Id"	INTEGER,
-                        //     "Timestamp"	TEXT,
-                        //     "Level"	TEXT,
-                        //     "Message"	TEXT,
-                        //     "ThreadId"	INTEGER,
-                        //     "Callsite"	TEXT,
-                        //     "GCTotalMemory"	INTEGER,
-                        //     "Exception"	TEXT,
-                        //     PRIMARY KEY("Id" AUTOINCREMENT)
-                        // );
-                        config.KeepConnection = false;
-                        config.DBProvider = "System.Data.SQLite.SQLiteConnection, System.Data.SQLite";
-                        config.ConnectionString = "Data Source=C:\\Temp\\logs.db;Version=3;";
-                        config.CommandText = "INSERT INTO LOGS (Timestamp, Level, Message, ThreadId, Callsite, GCTotalMemory, Exception) VALUES (@Timestamp, @Level, @Message, @ThreadId, @Callsite, @GCTotalMemory, @Exception)";
-                        config.Parameters.Add(new DatabaseParameterInfo { Name = "@Timestamp", Layout = "${longdate}" });
-                        config.Parameters.Add(new DatabaseParameterInfo { Name = "@Level", Layout = "${level:uppercase=true}" });
-                        config.Parameters.Add(new DatabaseParameterInfo { Name = "@Message", Layout = "${message}" });
-                        config.Parameters.Add(new DatabaseParameterInfo { Name = "@ThreadId", Layout = "${threadid}" });
-                        config.Parameters.Add(new DatabaseParameterInfo { Name = "@Callsite", Layout = "${callsite:className=false:fileName=true:includeSourcePath=false:methodName=true}" });
-                        config.Parameters.Add(new DatabaseParameterInfo { Name = "@GCTotalMemory", Layout = "${gc:property=TotalMemory}" });
-                        config.Parameters.Add(new DatabaseParameterInfo { Name = "@Exception", Layout = "${exception:format=ToString}" });
-                    })
-                .BuildLogger("myLogger");
-            var logger2 = ServiceProvider!.GetRequiredService<NLogLoggerProviderBuilder>()
+var logger = ServiceProvider.GetRequiredService<NLogLoggerProviderBuilder>()
+    .AddColoredConsoleTarget("myColoredConsoleTarget",
+        config =>
+        {
+            config.Layout = NLogLoggerProviderBuilder.DefaultLayout;
+        })
+    .AddFileTarget("myFileTarget",
+        config =>
+        {
+            config.Layout = NLogLoggerProviderBuilder.DefaultLayout;
+            config.FileName = "Logs/tester.log";
+        })
+    .AddDatabaseTarget("myDatabaseTarget",
+        config =>
+        {
+            // CREATE TABLE "LOGS" (
+            //     "Id"	INTEGER,
+            //     "Timestamp"	TEXT,
+            //     "Level"	TEXT,
+            //     "Message"	TEXT,
+            //     "ThreadId"	INTEGER,
+            //     "Callsite"	TEXT,
+            //     "GCTotalMemory"	INTEGER,
+            //     "Exception"	TEXT,
+            //     PRIMARY KEY("Id" AUTOINCREMENT)
+            // );
+            config.KeepConnection = false;
+            config.DBProvider = "System.Data.SQLite.SQLiteConnection, System.Data.SQLite";
+            config.ConnectionString = "Data Source=C:\\Temp\\logs.db;Version=3;";
+            config.CommandText = "INSERT INTO LOGS (Timestamp, Level, Message, ThreadId, Callsite, GCTotalMemory, Exception) VALUES (@Timestamp, @Level, @Message, @ThreadId, @Callsite, @GCTotalMemory, @Exception)";
+            config.Parameters.Add(new DatabaseParameterInfo { Name = "@Timestamp", Layout = "${longdate}" });
+            config.Parameters.Add(new DatabaseParameterInfo { Name = "@Level", Layout = "${level:uppercase=true}" });
+            config.Parameters.Add(new DatabaseParameterInfo { Name = "@Message", Layout = "${message}" });
+            config.Parameters.Add(new DatabaseParameterInfo { Name = "@ThreadId", Layout = "${threadid}" });
+            config.Parameters.Add(new DatabaseParameterInfo { Name = "@Callsite", Layout = "${callsite:className=false:fileName=true:includeSourcePath=false:methodName=true}" });
+            config.Parameters.Add(new DatabaseParameterInfo { Name = "@GCTotalMemory", Layout = "${gc:property=TotalMemory}" });
+            config.Parameters.Add(new DatabaseParameterInfo { Name = "@Exception", Layout = "${exception:format=ToString}" });
+        })
+    .BuildLogger("myLogger");
+            var logger2 = ServiceProvider.GetRequiredService<NLogLoggerProviderBuilder>()
                 .AddConsoleTarget("myConsoleTarget",
                     config =>
                     {

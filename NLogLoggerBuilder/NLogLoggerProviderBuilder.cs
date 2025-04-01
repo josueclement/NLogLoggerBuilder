@@ -1,12 +1,11 @@
-using System;
-using System.Linq;
-using NLog;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Targets;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
-
+using NLog;
+using System.Linq;
+using System;
 
 namespace NLogLoggerBuilder;
 
@@ -93,22 +92,19 @@ public class NLogLoggerProviderBuilder
         LogLevel maxLevel = LogLevel.Critical)
         where T : Target
     {
-        config?.Invoke(target);
+        config.Invoke(target);
         return AddTarget(target, minLevel, maxLevel);
     }
-    
-    private static NLog.LogLevel ConvertToNLogLevel(LogLevel logLevel)
+
+    private static NLog.LogLevel ConvertToNLogLevel(LogLevel logLevel) => logLevel switch
     {
-        return logLevel switch
-        {
-            LogLevel.Trace       => NLog.LogLevel.Trace,
-            LogLevel.Debug       => NLog.LogLevel.Debug,
-            LogLevel.Information => NLog.LogLevel.Info,
-            LogLevel.Warning     => NLog.LogLevel.Warn,
-            LogLevel.Error       => NLog.LogLevel.Error,
-            LogLevel.Critical    => NLog.LogLevel.Fatal,
-            LogLevel.None        => NLog.LogLevel.Off,
-            _                    => NLog.LogLevel.Off
-        };
-    }
+        LogLevel.Trace => NLog.LogLevel.Trace,
+        LogLevel.Debug => NLog.LogLevel.Debug,
+        LogLevel.Information => NLog.LogLevel.Info,
+        LogLevel.Warning => NLog.LogLevel.Warn,
+        LogLevel.Error => NLog.LogLevel.Error,
+        LogLevel.Critical => NLog.LogLevel.Fatal,
+        LogLevel.None => NLog.LogLevel.Off,
+        _ => NLog.LogLevel.Off
+    };
 }

@@ -1,9 +1,12 @@
-using System;
-using NLog.Targets;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
+using NLog.Targets;
+using System;
 
 namespace NLogLoggerBuilder;
 
+/// <summary>
+/// Colored console extension methods
+/// </summary>
 public static class ColoredConsoleTargetExtensions
 {
     /// <summary>

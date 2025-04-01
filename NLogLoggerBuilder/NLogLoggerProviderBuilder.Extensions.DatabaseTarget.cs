@@ -1,9 +1,12 @@
-using System;
-using NLog.Targets;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
+using NLog.Targets;
+using System;
 
 namespace NLogLoggerBuilder;
 
+/// <summary>
+/// Database extension methods
+/// </summary>
 public static class DatabaseTargetExtensions
 {
     /// <summary>
